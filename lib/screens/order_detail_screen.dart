@@ -156,7 +156,7 @@ class OrderDetailScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '\$${order.totalAmount.toStringAsFixed(2)}',
+                          '₹${order.totalAmount.toStringAsFixed(2)}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 32,
@@ -220,7 +220,7 @@ class OrderDetailScreen extends StatelessWidget {
                           const SizedBox(height: 12),
                           _buildInfoRow(
                             'Total Amount',
-                            '\$${order.totalAmount.toStringAsFixed(2)}',
+                            '₹${order.totalAmount.toStringAsFixed(2)}',
                           ),
                         ],
                       ),
@@ -309,7 +309,7 @@ class OrderDetailScreen extends StatelessWidget {
                                             Row(
                                               children: [
                                                 Text(
-                                                  '\$${item.price.toStringAsFixed(2)}',
+                                                  '₹${item.price.toStringAsFixed(2)}',
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.blue[700],
@@ -338,7 +338,7 @@ class OrderDetailScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '\$${itemSubtotal.toStringAsFixed(2)}',
+                                                  '₹${itemSubtotal.toStringAsFixed(2)}',
                                                   style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.bold,
@@ -384,7 +384,7 @@ class OrderDetailScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '\$${subtotal.toStringAsFixed(2)}',
+                                '₹${subtotal.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -406,7 +406,7 @@ class OrderDetailScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '\$${order.totalAmount.toStringAsFixed(2)}',
+                                '₹${order.totalAmount.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
