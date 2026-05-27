@@ -4,6 +4,7 @@ import 'dart:async';
 import '../models/order.dart';
 import '../services/order_service.dart';
 import '../services/auth_service.dart';
+import 'order_detail_screen.dart';
 
 class OrderListScreen extends StatefulWidget {
   const OrderListScreen({super.key});
@@ -341,7 +342,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
       child: InkWell(
         onTap: () {
-          _showOrderDetails(order);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderDetailScreen(order: order),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
@@ -473,178 +479,6 @@ class _OrderListScreenState extends State<OrderListScreen> {
     );
   }
 
-  void _showOrderDetails(Order order) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        final dateFormat = DateFormat('MMM dd, yyyy');
-        final platformColor = Order.getPlatformColor(order.platform);
-        final statusColor = Order.getStatusColor(order.status);
-
-        return DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          minChildSize: 0.5,
-          maxChildSize: 0.95,
-          expand: false,
-          builder: (context, scrollController) {
-            return Column(
-              children: [
-                // Handle bar
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 12),
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-
-                // Content
-                Expanded(
-                  child: ListView(
-                    controller: scrollController,
-                    padding: const EdgeInsets.all(24),
-                    children: [
-                      // Title
-                      const Text(
-                        'Order Details',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Platform and Order ID
-                      _buildDetailRow(
-                        'Platform',
-                        order.platform,
-                        valueColor: platformColor,
-                      ),
-                      const SizedBox(height: 12),
-                      _buildDetailRow('Order ID', order.orderId),
-                      const SizedBox(height: 12),
-                      _buildDetailRow('Date', dateFormat.format(order.orderDate)),
-                      const SizedBox(height: 12),
-                      _buildDetailRow(
-                        'Status',
-                        order.status,
-                        valueColor: statusColor,
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Items section
-                      const Text(
-                        'Items',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-
-                      ...order.items.map((item) => Card(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.productName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Qty: ${item.quantity}',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    '₹${item.price.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      )),
-
-                      const SizedBox(height: 16),
-                      const Divider(),
-                      const SizedBox(height: 16),
-
-                      // Total
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Total Amount',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '₹${order.totalAmount.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value, {Color? valueColor}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
-            color: valueColor ?? Colors.black87,
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 // Made with Bob

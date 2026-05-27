@@ -44,11 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (success && mounted) {
         // Navigate to Order List screen
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const OrderListScreen(),
-          ),
-        );
+        Navigator.of(context).pushReplacementNamed('/orders');
       } else {
         setState(() {
           _errorMessage = 'Invalid email or password';
@@ -85,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
